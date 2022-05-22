@@ -1,30 +1,30 @@
 #include "main.h"
 
-pros::Motor back_right(2);
-pros::Motor front_right(9);
-pros::Motor back_left(10);
-pros::Motor front_left(1);
-pros::Motor four_bar (5);
+pros::Motor backRight(2);
+pros::Motor frontRight(9);
+pros::Motor backLeft(10);
+pros::Motor frontLeft(1);
+pros::Motor fourBar (5);
 pros::Motor clamp(15);
-pros::Motor two_bar(17);
+pros::Motor twoBar(17);
 pros::Motor intake(8);
 
 pros::Controller master(CONTROLLER_MASTER);
 
 void setDriveVoltage(double voltage)
 {
-  back_right.move_voltage(voltage);
-  front_right.move_voltage(voltage);
-  back_left.move_voltage(voltage);
-  front_left.move_voltage(voltage);
+  backRight.move_voltage(voltage);
+  frontRight.move_voltage(voltage);
+  backLeft.move_voltage(voltage);
+  frontLeft.move_voltage(voltage);
 }
 
 void resetDriveMotors()
 {
-  back_right.tare_position();
-  front_right.tare_position();
-  back_left.tare_position();
-  front_left.tare_position();
+  backRight.tare_position();
+  frontRight.tare_position();
+  backLeft.tare_position();
+  frontLeft.tare_position();
 }
 
 double convert(double inches)
@@ -46,15 +46,15 @@ class PID
    double prevError;
    double derivative;
    double integral;
-   void translate(double distance);
+   void moveDistance(double distance);
 };
 
-void PID::translate(double distance)
+void PID::moveDistance(double distance)
 {
   while(fabs(error)>0.0001)
   {
     target = convert(distance);
-    current = (back_left.get_position()+back_right.get_position()+front_left.get_position()+front_right.get_position())/4;
+    current = (backLeft.get_position()+backRight.get_position()+frontLeft.get_position()+frontRight.get_position())/4;
     error = current - target;
     derivative = error - prevError;
     integral += error;
