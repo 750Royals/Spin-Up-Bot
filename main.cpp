@@ -1,6 +1,8 @@
 #include "main.h"
 #include "setup.cpp"
 
+
+
 /**
  * A callback function for LLEMU's center button.
  *
@@ -29,6 +31,11 @@ void initialize() {
 	pros::lcd::set_text(1, "Hello PROS User!");
 
 	pros::lcd::register_btn1_cb(on_center_button);
+
+	frontLeft.set_brake_mode(MOTOR_BRAKE_COAST);
+	backLeft.set_brake_mode(MOTOR_BRAKE_COAST);
+	frontRight.set_brake_mode(MOTOR_BRAKE_COAST);
+	backRight.set_brake_mode(MOTOR_BRAKE_COAST);
 }
 
 /**
@@ -62,7 +69,7 @@ void competition_initialize() {}
  */
 void autonomous()
 {
-	setDrive(0.1, 0.1, 0.1);
+
 }
 
 /**
@@ -80,5 +87,15 @@ void autonomous()
  */
 void opcontrol()
 {
+
+
+		int power = master.get_analog(ANALOG_LEFT_Y);
+		int turn = master.get_analog(ANALOG_RIGHT_X);
+		int left_move = power + turn;
+		int right_move = power - turn;
+		frontLeft.move(left_move);
+		backLeft.move(left_move);
+		frontRight.move(right_move);
+		backRight.move(right_move);
 
 }
