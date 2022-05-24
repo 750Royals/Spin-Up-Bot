@@ -92,15 +92,15 @@ void setDrive(double kP, double kI, double kD)
 
 
 
-double curveControls(double value, double threshold)
+double curveControls(double value, double min, int exponent)
 {
   if(value>0)
   {
-    return ((1-(threshold/127))*pow((value/127),3)+(threshold/127))*127;
+    return ((1-(min/127))*pow((value/127),exponent)+(min/127))*127;
   }
   else if(value<0)
   {
-    return ((1-(threshold/127))*pow((value/127),3)-(threshold/127))*127;
+    return ((1-(min/127))*pow((value/127),exponent)-(min/127))*127;
   }
   return 0;
 }
