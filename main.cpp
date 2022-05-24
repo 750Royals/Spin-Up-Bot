@@ -82,8 +82,8 @@ void autonomous()
  */
 void opcontrol()
 {
-		int power = curveControls(leftY,0.1);
-		int turn = curveControls(rightX,0.1);
+		int power = curveControls(leftY, 10);
+		int turn = curveControls(rightX, 10);
 		int leftMove = power + turn;
 		int rightMove = power - turn;
 		frontLeft.move(leftMove);
