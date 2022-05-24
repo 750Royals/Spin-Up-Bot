@@ -2,7 +2,6 @@
 #include "setup.cpp"
 
 
-
 /**
  * A callback function for LLEMU's center button.
  *
@@ -32,10 +31,6 @@ void initialize() {
 
 	pros::lcd::register_btn1_cb(on_center_button);
 
-	frontLeft.set_brake_mode(MOTOR_BRAKE_COAST);
-	backLeft.set_brake_mode(MOTOR_BRAKE_COAST);
-	frontRight.set_brake_mode(MOTOR_BRAKE_COAST);
-	backRight.set_brake_mode(MOTOR_BRAKE_COAST);
 }
 
 /**
@@ -87,15 +82,13 @@ void autonomous()
  */
 void opcontrol()
 {
-
-
-		int power = master.get_analog(ANALOG_LEFT_Y);
-		int turn = master.get_analog(ANALOG_RIGHT_X);
-		int left_move = power + turn;
-		int right_move = power - turn;
-		frontLeft.move(left_move);
-		backLeft.move(left_move);
-		frontRight.move(right_move);
-		backRight.move(right_move);
+		int power = curveControls(leftY,0.1);
+		int turn = curveControls(rightX,0.1);
+		int leftMove = power + turn;
+		int rightMove = power - turn;
+		frontLeft.move(leftMove);
+		backLeft.move(leftMove);
+		frontRight.move(rightMove);
+		backRight.move(rightMove);
 
 }
