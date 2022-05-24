@@ -96,11 +96,11 @@ double curveControls(double value, double threshold)
 {
   if(leftY>0)
   {
-    return ((1-threshold)*pow((value/127),3)+threshold)*127;
+    return ((1-(threshold/127))*pow((value/127),3)+(threshold/127))*127;
   }
   else if(leftY<0)
   {
-    return ((1-threshold)*pow((value/127),3)-threshold)*127;
+    return ((1-(threshold/127))*pow((value/127),3)-(threshold/127))*127;
   }
   return 0;
 }
