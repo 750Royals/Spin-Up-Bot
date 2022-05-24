@@ -11,6 +11,21 @@ pros::Motor intake(8);
 
 pros::Controller master(CONTROLLER_MASTER);
 
+double deadzone(double value, double deadzone)
+{
+  if(fabs(value)<deadzone)
+  {
+    return 0;
+  }
+  return value;
+}
+
+double leftY = deadzone(master.get_analog(ANALOG_LEFT_Y),10);
+double leftX = deadzone(master.get_analog(ANALOG_LEFT_X),10);
+double rightY = deadzone(master.get_analog(ANALOG_RIGHT_Y),10);
+double rightX = deadzone(master.get_analog(ANALOG_RIGHT_X),10);
+
+
 void setDriveVoltage(double voltage)
 {
   backRight.move_voltage(voltage);
@@ -73,4 +88,19 @@ void setDrive(double kP, double kI, double kD)
   drive.kP = kP;
   drive.kI = kI;
   drive.kD = kD;
+}
+
+
+
+double curveControls(double value, double threshold)
+{
+  if(leftY>0)
+  {
+    return ((1-threshold)*pow((value/127),3)+threshold)*127;
+  }
+  else if(leftY<0)
+  {
+    return ((1-threshold)*pow((value/127),3)-threshold)*127;
+  }
+  return 0;
 }
