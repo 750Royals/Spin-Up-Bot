@@ -1,7 +1,7 @@
 #include "main.h"
 
-pros::Motor backRight(2);
-pros::Motor frontRight(9);
+pros::Motor backRight(2, true);
+pros::Motor frontRight(9, true);
 pros::Motor backLeft(10);
 pros::Motor frontLeft(1);
 pros::Motor fourBar (5);
