@@ -4,10 +4,6 @@ pros::Motor backRight(2, true);
 pros::Motor frontRight(9, true);
 pros::Motor backLeft(10);
 pros::Motor frontLeft(1);
-pros::Motor fourBar (5);
-pros::Motor clamp(15);
-pros::Motor twoBar(17);
-pros::Motor intake(8);
 
 pros::Controller master(CONTROLLER_MASTER);
 
@@ -97,6 +93,10 @@ double curveControls(double value, double min, int exponent)
   if(value>0)
   {
     return ((1-(min/127))*pow((value/127),exponent)+(min/127))*127;
+  }
+  else if(exponent%2==0 && value<0)
+  {
+    return (((min/127)-1)*pow((value/127),exponent)-(min/127))*127;
   }
   else if(value<0)
   {
