@@ -1,5 +1,7 @@
 #include "main.h"
 
+extern PID drive;
+
 double leftY;
 double leftX;
 double rightY;
@@ -11,4 +13,3 @@ double convert(double inches);
 void setDrive(double kP, double kI, double kD);
 double curveControls(double value, double min, int exponent);
 
-PID drive;
