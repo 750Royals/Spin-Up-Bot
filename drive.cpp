@@ -2,12 +2,6 @@
 
 
 
-double leftY = deadzone(controller.get_analog(ANALOG_LEFT_Y),10);
-double leftX = deadzone(controller.get_analog(ANALOG_LEFT_X),10);
-double rightY = deadzone(controller.get_analog(ANALOG_RIGHT_Y),10);
-double rightX = deadzone(controller.get_analog(ANALOG_RIGHT_X),10);
-
-
 void setDriveVoltage(double voltage)
 {
   backRight.move_voltage(voltage);
@@ -31,9 +25,9 @@ double convert(double inches)
   return (300*inches)/circumference;
 }
 
-double deadzone(double value, double deadzone)
+int deadzone(int value, int deadzone)
 {
-  if(fabs(value)<deadzone)
+  if(abs(value)<deadzone)
   {
     return 0;
   }
@@ -74,31 +68,36 @@ void setRotationalDrive(double kP, double kI, double kD)
 }
 
 
-double curveControls(double value, double min, int exponent)
+double curveControls(int value, double min, int exponent)
 {
   if(value>0)
   {
-    return ((1-(min/127))*pow((value/127),exponent)+(min/127))*127;
+    return ((1-(min/127))*pow((value/127.0),exponent)+(min/127.0))*127.0;
   }
   else if(exponent%2==0 && value<0)
   {
-    return (((min/127)-1)*pow((value/127),exponent)-(min/127))*127;
+    return (((min/127.0)-1)*pow((value/127.0),exponent)-(min/127.0))*127.0;
   }
   else if(value<0)
   {
-    return ((1-(min/127))*pow((value/127),exponent)-(min/127))*127;
+    return ((1-(min/127.0))*pow((value/127.0),exponent)-(min/127.0))*127.0;
   }
   return 0;
 }
 
 void setDriveControls()
 {
-    int power = curveControls(leftY, 10, 3);
-		int turn = curveControls(rightX, 10, 3);
-		int leftMove = power + turn;
-		int rightMove = power - turn;
-		frontLeft.move(leftMove);
-		backLeft.move(leftMove);
-		frontRight.move(rightMove);
-		backRight.move(rightMove);
+    double leftY = deadzone(controller.get_analog(ANALOG_LEFT_Y),10);
+    double leftX = deadzone(controller.get_analog(ANALOG_LEFT_X),10);
+    double rightY = deadzone(controller.get_analog(ANALOG_RIGHT_Y),10);
+    double rightX = deadzone(controller.get_analog(ANALOG_RIGHT_X),10);
+
+    double power = curveControls(leftY, 10, 3);
+    double turn = curveControls(rightX, 10, 3);
+    int leftMove = power + turn;
+    int rightMove = power - turn;
+    frontLeft.move(leftMove);
+    backLeft.move(leftMove);
+    frontRight.move(rightMove);
+    backRight.move(rightMove);
 }
