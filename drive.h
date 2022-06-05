@@ -1,15 +1,19 @@
 #include "main.h"
 
-extern PID drive;
+extern PID linearDrive;
+extern PID rotationalDrive;
 
-double leftY;
-double leftX;
-double rightY;
-double rightX;
+extern double leftY;
+extern double leftX;
+extern double rightY;
+extern double rightX;
 double deadzone(double value, double deadzone);
 void setDriveVoltage(double voltage);
 void resetDriveMotors();
 double convert(double inches);
-void setDrive(double kP, double kI, double kD);
+void setLinearDrive(double kP, double kI, double kD);
+void setAngularDrive(double kP, double kI, double kD);
 double curveControls(double value, double min, int exponent);
+void setDriveControls();
+
 
