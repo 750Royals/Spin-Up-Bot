@@ -59,13 +59,19 @@ void PID::moveDistance(double distance)
 
 
 
-void setDrive(double kP, double kI, double kD)
+void setLinearDrive(double kP, double kI, double kD)
 {
-  drive.kP = kP;
-  drive.kI = kI;
-  drive.kD = kD;
+  linearDrive.kP = kP;
+  linearDrive.kI = kI;
+  linearDrive.kD = kD;
 }
 
+void setRotationalDrive(double kP, double kI, double kD)
+{
+  rotationalDrive.kP = kP;
+  rotationalDrive.kI = kI;
+  rotationalDrive.kD = kD;
+}
 
 
 double curveControls(double value, double min, int exponent)
@@ -85,3 +91,14 @@ double curveControls(double value, double min, int exponent)
   return 0;
 }
 
+void setDriveControls()
+{
+    int power = curveControls(leftY, 10, 3);
+		int turn = curveControls(rightX, 10, 3);
+		int leftMove = power + turn;
+		int rightMove = power - turn;
+		frontLeft.move(leftMove);
+		backLeft.move(leftMove);
+		frontRight.move(rightMove);
+		backRight.move(rightMove);
+}
