@@ -15,8 +15,6 @@ class PID
    void moveDistance(double distance);
 };
 
-extern PID linearDrive;
-extern PID rotationalDrive;
+extern PID drive;
 
-void setLinearDrive(double kP, double kI, double kD);
-void setAngularDrive(double kP, double kI, double kD);
+void setDriveGains(double kP, double kI, double kD);
