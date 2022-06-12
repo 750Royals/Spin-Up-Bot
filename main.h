@@ -75,9 +75,9 @@ void opcontrol(void);
 /**
  * You can add C++-only headers here
  */
-#include "headers/globals.h"
-#include "headers/drive.h"
-#include "headers/pid.h"
+#include "subsystemHeaders/globals.h"
+#include "subsystemHeaders/drive.h"
+#include "subsystemHeaders/pid.h"
 //#include <iostream>
 #endif
 
