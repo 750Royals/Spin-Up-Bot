@@ -35,16 +35,10 @@ void PID::moveDistance(double distance)
 
 
 
-void setLinearDrive(double kP, double kI, double kD)
+void setDriveGains(double kP, double kI, double kD)
 {
-  linearDrive.kP = kP;
-  linearDrive.kI = kI;
-  linearDrive.kD = kD;
+  drive.kP = kP;
+  drive.kI = kI;
+  drive.kD = kD;
 }
 
-void setRotationalDrive(double kP, double kI, double kD)
-{
-  rotationalDrive.kP = kP;
-  rotationalDrive.kI = kI;
-  rotationalDrive.kD = kD;
-}
