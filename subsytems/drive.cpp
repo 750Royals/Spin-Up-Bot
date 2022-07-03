@@ -50,6 +50,11 @@ void setDriveControls()
     backLeft.move(leftMove);
     frontRight.move(rightMove);
     backRight.move(rightMove);
+  
+    //Constant intake
+		intake.move_velocity(110);
+  
+    //Flywheel Code
 }
 
 
