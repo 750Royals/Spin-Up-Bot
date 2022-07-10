@@ -52,11 +52,11 @@ void setDriveControls()
     backRight.move(rightMove);
   
     //Constant Itake
-    intake.move_velocity(300);
+    intake.move_velocity(250);
   
     //Flywheel Code
-		if(master.get_digital(DIGITAL_X))
-		{  
+    if(master.get_digital(DIGITAL_X))
+    {  
       flywheel.move_velocity(110);
     }
     else if(master.get_digital(DIGITAL_B))
