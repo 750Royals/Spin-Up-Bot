@@ -57,15 +57,18 @@ void setDriveControls()
     //Flywheel Code
     if(master.get_digital(DIGITAL_X))
     {  
-      flywheel.move_velocity(110);
+      leftFlywheel.move_velocity(110);
+      rightFlywheel.move_velocity(110);
     }
     else if(master.get_digital(DIGITAL_B))
     {
-      flywheel.move_velocity(0);
+      leftFlywheel.move_velocity(0);
+      rightFlywheel.move_velocity(0);
     }
     else
     {
-      flywheel.move_velocity(0);
+      leftFlywheel.move_velocity(0);
+      rightFlywheel.move_velocity(0);
     }
 }
 
