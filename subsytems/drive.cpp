@@ -50,9 +50,26 @@ void setDriveControls()
     backLeft.move(leftMove);
     frontRight.move(rightMove);
     backRight.move(rightMove);
-  
+ 
     //Constant Itake
-    intake.move_velocity(300);
+    //Toggle Switch for Intake Speed
+    bool highSpeed = true;
+    if(highSpeed) 
+    {
+      intake.move_velocity(300);
+    }
+    else
+    {
+      intake.move_velocity(150);
+
+    }
+  
+    if(master.get_digital(DIGITAL_A))
+    {
+      highSpeed != highSpeed
+    }
+     
+    
   
     //Flywheel Code
     if(master.get_digital(DIGITAL_X))
