@@ -37,6 +37,7 @@ double curveControls(int value, double min, int exponent)
 
 void setDriveControls()
 {
+    flywheel.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
     double leftY = deadzone(controller.get_analog(ANALOG_LEFT_Y),10);
     double leftX = deadzone(controller.get_analog(ANALOG_LEFT_X),10);
     double rightY = deadzone(controller.get_analog(ANALOG_RIGHT_Y),10);
@@ -66,7 +67,7 @@ void setDriveControls()
   
     if(master.get_digital(DIGITAL_A))
     {
-      highSpeed != highSpeed
+      highSpeed != highSpeed;
     }
      
     
