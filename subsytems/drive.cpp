@@ -47,10 +47,10 @@ void setDriveControls()
     double turn = curveControls(rightX, 10, 3);
     int leftMove = power + turn;
     int rightMove = power - turn;
-    frontLeft.move(leftMove*0.6);
-    backLeft.move(leftMove*0.6);
-    frontRight.move(rightMove*0.6);
-    backRight.move(rightMove*0.6);
+    frontLeft.move(leftMove);
+    backLeft.move(leftMove);
+    frontRight.move(rightMove);
+    backRight.move(rightMove);
  
     //Constant Itake
     //Toggle Switch for Intake Speed
