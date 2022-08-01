@@ -22,7 +22,7 @@ double curveControls(int value, double min, int exponent)
 {
   if(value>0)
   {
-    return ((1-(min/127))*pow((value/127.0),exponent)+(min/127.0))*127.0;
+    return ((1-(min/127.0))*pow((value/127.0),exponent)+(min/127.0))*127.0;
   }
   else if(exponent%2==0 && value<0)
   {
