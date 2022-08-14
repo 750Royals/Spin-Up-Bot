@@ -37,7 +37,7 @@ double curveControls(int value, double min, int exponent)
 
 void setDriveControls()
 {
-    flywheel.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    flywheel.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     double leftY = deadzone(controller.get_analog(ANALOG_LEFT_Y),10);
     double leftX = deadzone(controller.get_analog(ANALOG_LEFT_X),10);
     double rightY = deadzone(controller.get_analog(ANALOG_RIGHT_Y),10);
