@@ -42,6 +42,12 @@ void setDriveControls()
     double leftX = deadzone(controller.get_analog(ANALOG_LEFT_X),10);
     double rightY = deadzone(controller.get_analog(ANALOG_RIGHT_Y),10);
     double rightX = deadzone(controller.get_analog(ANALOG_RIGHT_X),10);
+  
+  
+    frontLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    backleft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    frontright.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    frontleft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
     double power = curveControls(leftY, 10, 3);
     double turn = curveControls(rightX, 10, 3);
@@ -88,6 +94,16 @@ void setDriveControls()
       leftFlywheel.move_velocity(0);
       rightFlywheel.move_velocity(0);
     }
+  
+    // Indexer Code
+   if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A))
+   {
+     indexer.move_absolute(-30,100);
+     pros::delay(500);
+     indexer.move_absulute(30,10);
+   }
+     
+    
 }
 
 
