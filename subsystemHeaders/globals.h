@@ -7,6 +7,6 @@ extern pros::Motor frontRight;
 extern pros::Motor backLeft;
 extern pros::Motor frontLeft;
 extern pros::Motor intake;
-extern pros::Motor rightFlywheel;
-extern pros::Motor leftFlywheel;
+extern pros::Motor flywheelOne;
+extern pros::Motor flywheelTwo;
 extern pros::Motor indexer;
