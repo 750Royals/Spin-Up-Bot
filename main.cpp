@@ -27,6 +27,7 @@ void initialize() {
 	pros::lcd::set_text(1, "Hello PROS User!");
 
 	pros::lcd::register_btn1_cb(on_center_button);
+	pros::ADIDigitalOut piston ('G');
 }
 
 /**
@@ -73,10 +74,12 @@ void autonomous() {}
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void opcontrol() 
+void opcontrol()
 {
 	while(1)
 	{
-		setDriveControls();
+		setDriverControls();
+		indexerControl();
+		pros::delay(10);
 	}
 }
