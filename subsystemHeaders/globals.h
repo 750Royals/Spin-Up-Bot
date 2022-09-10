@@ -9,4 +9,4 @@ extern pros::Motor frontLeft;
 extern pros::Motor intake;
 extern pros::Motor flywheelOne;
 extern pros::Motor flywheelTwo;
-extern pros::Motor indexer;
+extern pros::ADIDigitalOut indexer;
