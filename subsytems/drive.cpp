@@ -11,6 +11,18 @@ double convert(double inches)
   return (300*inches)/circumference;
 }
 
+//Indexer Code
+//Indexer retracts when X is pressed and extends when X is let go
+void indexerControl()
+{
+  indexer.set_value(1);
+  if(controller.get_digital(DIGITAL_X))
+  {
+    indexer.set_value(0);
+    pros::delay(10);
+  }
+}
+
 int deadzone(int value, int deadzone)
 {
   if(abs(value)<deadzone)
@@ -39,11 +51,8 @@ double curveControls(int value, double min, int exponent)
 
 
 
-void setDriveControls()
+void setDriverControls()
 {
-
-
-
     double leftY = deadzone(controller.get_analog(ANALOG_LEFT_Y),10);
     double leftX = deadzone(controller.get_analog(ANALOG_LEFT_X),10);
     double rightY = deadzone(controller.get_analog(ANALOG_RIGHT_Y),10);
@@ -60,7 +69,6 @@ void setDriveControls()
     frontRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     backRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
-    indexer.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
     flywheelOne.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     flywheelTwo.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
@@ -72,13 +80,16 @@ void setDriveControls()
     double c = frontLeft.get_actual_velocity();
     double d = backLeft.get_actual_velocity();
 
+    //Indexer piston set to extended by default
+    indexer.set_value(1);
 
+    frontRight.move(-rightMove);
+    frontLeft.move(-leftMove);
+    backRight.move(-rightMove);
+    backLeft.move(-leftMove);
 
-    frontRight.move(rightMove);
-    frontLeft.move(leftMove);
-    backRight.move(rightMove);
-    backLeft.move(leftMove);
-
+    //Intake code
+    intake.move_velocity(-500);
 
 
     //Flywheel Code
@@ -88,35 +99,13 @@ void setDriveControls()
     }
     if(move)
     {
-      flywheelOne.move_velocity(250);
-      flywheelTwo.move_velocity(250);
+      flywheelOne.move_velocity(600);
+      flywheelTwo.move_velocity(600);
     }
-    else{
+    else if(!move)
+    {
       flywheelOne.move_velocity(0);
       flywheelTwo.move_velocity(0);
     }
-
-
-    // intake code
-    if(controller.get_digital(DIGITAL_L1))
-    {
-      move1 = !move1;
-    }
-    if(move1)
-    {
-    intake.move_velocity(-500);
-    }
-    else{
-      intake.move_velocity(0);
-    }
-
-    // Indexer Code
-    if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_A))
-    {
-      indexer.move_absolute(-15,100);
-      pros:: delay(500);
-      indexer.move_absolute(-15,10);
-    }
-
 
 }
