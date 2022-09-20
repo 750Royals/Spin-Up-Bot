@@ -15,11 +15,15 @@ double convert(double inches)
 //Indexer retracts when X is pressed and extends when X is let go
 void indexerControl()
 {
-  indexer.set_value(1);
   if(controller.get_digital(DIGITAL_X))
   {
-    indexer.set_value(0);
-    pros::delay(10);
+    indexer.move_velocity(300);
+    pros::delay(50);
+  }
+  else
+  {
+    indexer.move_velocity(0);
+    pros::delay(50);
   }
 }
 
@@ -80,13 +84,11 @@ void setDriverControls()
     double c = frontLeft.get_actual_velocity();
     double d = backLeft.get_actual_velocity();
 
-    //Indexer piston set to extended by default
-    indexer.set_value(1);
 
-    frontRight.move(-rightMove);
-    frontLeft.move(-leftMove);
-    backRight.move(-rightMove);
-    backLeft.move(-leftMove);
+    frontRight.move(rightMove);
+    frontLeft.move(leftMove);
+    backRight.move(rightMove);
+    backLeft.move(leftMove);
 
     //Intake code
     intake.move_velocity(-500);
