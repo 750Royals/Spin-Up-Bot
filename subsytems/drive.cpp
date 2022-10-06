@@ -17,12 +17,7 @@ void indexerControl()
 {
   if(controller.get_digital(DIGITAL_X))
   {
-    indexer.move_velocity(300);
-    pros::delay(50);
-  }
-  else
-  {
-    indexer.move_velocity(0);
+    indexer.move_relative(360, 100);
     pros::delay(50);
   }
 }
@@ -74,25 +69,16 @@ void setDriverControls()
     backRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
 
-    flywheelOne.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-    flywheelTwo.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+    flywheel.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     intake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 
-
-    double a = frontRight.get_actual_velocity();
-    double b = backRight.get_actual_velocity();
-    double c = frontLeft.get_actual_velocity();
-    double d = backLeft.get_actual_velocity();
-
-
-    frontRight.move(rightMove);
-    frontLeft.move(leftMove);
-    backRight.move(rightMove);
-    backLeft.move(leftMove);
+    frontRight.move(0.9*rightMove);
+    frontLeft.move(0.9*leftMove);
+    backRight.move(0.9*rightMove);
+    backLeft.move(0.9*leftMove);
 
     //Intake code
-    intake.move_velocity(-500);
-
+    intake.move_velocity(-600);
 
     //Flywheel Code
     if(controller.get_digital(DIGITAL_L2))
@@ -101,13 +87,11 @@ void setDriverControls()
     }
     if(move)
     {
-      flywheelOne.move_velocity(600);
-      flywheelTwo.move_velocity(600);
+      flywheel.move_velocity(600);
     }
     else if(!move)
     {
-      flywheelOne.move_velocity(0);
-      flywheelTwo.move_velocity(0);
+      flywheel.move_velocity(0);
     }
 
 }
