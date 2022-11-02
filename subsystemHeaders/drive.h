@@ -7,3 +7,4 @@ double convert(double inches);
 double curveControls(int value, double min, int exponent);
 void setDriverControls();
 void indexerControl();
+void rollerControl();
