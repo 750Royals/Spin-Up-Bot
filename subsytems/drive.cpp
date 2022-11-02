@@ -23,7 +23,7 @@ void indexerControl()
 }
 void rollerControl()
 {
-  if(xontroller.get_digital(DIGITAL_Y))
+  if(controller.get_digital(DIGITAL_Y))
   {
     roller.move_relative(1080, 100);
     pros::delay(50);
