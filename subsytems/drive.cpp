@@ -21,7 +21,14 @@ void indexerControl()
     pros::delay(50);
   }
 }
-
+void rollerControl()
+{
+  if(xontroller.get_digital(DIGITAL_Y))
+  {
+    roller.move_relative(1080, 100);
+    pros::delay(50);
+  }
+}
 int deadzone(int value, int deadzone)
 {
   if(abs(value)<deadzone)
