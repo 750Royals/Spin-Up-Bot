@@ -1,7 +1,7 @@
 #include "main.h"
 
-okapi::MotorGroup leftSet({3,4});
-okapi::MotorGroup rightSet({1,2});
+okapi::MotorGroup leftSet({3,5});
+okapi::MotorGroup rightSet({1,4});
 std::shared_ptr<ChassisController> chassis =
 ChassisControllerBuilder()
 .withMotors(leftSet, rightSet)
@@ -20,8 +20,7 @@ void right_auton()
   pros::delay(3);
   chassis->turnAngle(-90_deg);//Turn right and face the high goal
   pros::delay(3);
-  flywheelOne.move_velocity(600);
-  flywheelTwo.move_velocity(600); //Shoot discs into high goal
+  flywheel.move_velocity(600); //Shoot discs into high goal
   pros::delay(3);
 }
 
@@ -36,6 +35,5 @@ void left_auton()
   chassis->moveDistance(1.0_ft);//Slightly move forward
   chassis->turnAngle(90_deg);//Turn left
   chassis->moveDistance(0.8_ft);//Slightly move forward
-  flywheelOne.move_velocity(600);
-  flywheelTwo.move_velocity(600); //Shoot discs into high goal
+  flywheel.move_velocity(600); //Shoot discs into high goal
 }
