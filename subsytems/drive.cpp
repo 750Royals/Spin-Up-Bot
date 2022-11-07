@@ -75,17 +75,36 @@ void setDriverControls()
     frontRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     backRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
-
     flywheel.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     intake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 
+    //Set drive to 90% power
     frontRight.move(0.9*rightMove);
     frontLeft.move(0.9*leftMove);
     backRight.move(0.9*rightMove);
     backLeft.move(0.9*leftMove);
 
+    //Piston Code
+    if(controller.get_digital(DIGITAL_A))
+    {
+      piston.set_value(HIGH);
+      pros::delay(500);
+      piston.set_value(LOW);
+    }
+    else
+    {
+      piston.set_value(LOW);
+    }
+
     //Intake code
-    intake.move_velocity(-600);
+    if(controller.get_digital(DIGITAL_L1))
+    {
+      intake.move_velocity(-350);
+    }
+    else{
+      intake.move_velocity(0);
+    }
+
 
     //Flywheel Code
     if(controller.get_digital(DIGITAL_L2))
@@ -96,7 +115,7 @@ void setDriverControls()
     {
       flywheel.move_velocity(600);
     }
-    else if(!move)
+    else
     {
       flywheel.move_velocity(0);
     }
