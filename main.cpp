@@ -62,6 +62,7 @@ void autonomous()
 {
 	//right_auton();
 	//left_auton();
+	skills_auton();
 }
 
 /**
