@@ -113,11 +113,19 @@ void setDriverControls()
     }
     if(move)
     {
-      flywheel.move_velocity(600);
+      flywheel.move_velocity(-600);
     }
     else
     {
       flywheel.move_velocity(0);
     }
 
+    //Roller code
+    if(controller.get_digital(DIGITAL_UP))
+    {
+      roller.move_velocity(350);
+    }
+    else{
+      roller.move_velocity(0);
+    }
 }
