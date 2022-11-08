@@ -27,13 +27,104 @@ void right_auton()
 void left_auton()
 {
   chassis->moveDistance(0.5_ft);//Spin roller and move forward
+  pros::delay(3);
   chassis->turnAngle(-15_deg);//Turn slightly right
+  pros::delay(3);
   chassis->moveDistance(2.4_ft);//Move forward and collect discs on autonomous line
+  pros::delay(3);
   chassis->turnAngle(-90_deg);//Turn right
+  pros::delay(3);
   chassis->moveDistance(0.8_ft);//Slightly move forward
+  pros::delay(3);
   chassis->turnAngle(90_deg);//Turn left
+  pros::delay(3);
   chassis->moveDistance(1.0_ft);//Slightly move forward
+  pros::delay(3);
   chassis->turnAngle(90_deg);//Turn left
+  pros::delay(3);
   chassis->moveDistance(0.8_ft);//Slightly move forward
+  pros::delay(3);
   flywheel.move_velocity(600); //Shoot discs into high goal
+  pros::delay(3);
+}
+
+void skills_auton()
+{
+  roller.move_velocity(600); //Rotates initial field roller
+  pros::delay(3);
+  chassis->moveDistance(1.6_ft);//Slightly move forward
+  pros::delay(3);
+  chassis->turnAngle(45_deg);//Turn left
+  pros::delay(3);
+  chassis->moveDistance(.4_ft);//Slightly move forward
+  pros::delay(3);
+  chassis->turnAngle(45_deg);//Turn left
+  pros::delay(3);
+  chassis->moveDistance(1.2_ft);//Slightly move forward
+  pros::delay(3);
+  chassis->turnAngle(-90_deg);//Turn right
+  pros::delay(3);
+  chassis->moveDistance(1.8_ft);//Slightly move forward
+  pros::delay(3);
+  chassis->turnAngle(-90_deg);//Turn right
+  pros::delay(3);
+  chassis->moveDistance(.7_ft);//Slightly move backward
+  pros::delay(3);
+  chassis->moveDistance(.6_ft);//Slightly move forward
+  pros::delay(3);
+  chassis->turnAngle(90_deg);//Turn left
+  pros::delay(3);
+  chassis->moveDistance(3_ft);//Slightly move forward
+  pros::delay(3);
+  flywheel.move_velocity(600); //Shoot discs into high goal
+  pros::delay(3);
+  chassis->moveDistance(-3_ft);//Slightly move backward
+  pros::delay(3);
+  chassis->turnAngle(-45_deg);//Turn right
+  pros::delay(3);
+  chassis->moveDistance(5.8_ft);//Slightly move forward
+  pros::delay(3); //BOTTOM lEFT POINT FROM MIDDLE
+  chassis->turnAngle(45_deg);//Turn left
+  pros::delay(3);
+  chassis->moveDistance(1_ft);//Slightly move forward
+  pros::delay(3);
+  flywheel.move_velocity(600); //Shoot discs into high goal
+  pros::delay(3);
+  chassis->moveDistance(-.3_ft);//Slightly move backward
+  pros::delay(3);
+  chassis->turnAngle(45_deg);//Turn left
+  pros::delay(3);
+  chassis->moveDistance(1.7_ft);//Slightly move forward
+  pros::delay(3);
+  chassis->turnAngle(-90_deg);//Turn right
+  pros::delay(3);
+  flywheel.move_velocity(600); //Shoot discs into high goal
+  pros::delay(3);
+  chassis->turnAngle(-90_deg);//Turn right
+  pros::delay(3);
+  chassis->moveDistance(1.5_ft);//Slightly move forward
+  pros::delay(3);
+  chassis->turnAngle(90_deg);//Turn left
+  pros::delay(3);
+  chassis->moveDistance(1.3_ft);//Slightly move forward
+  pros::delay(3);
+  chassis->turnAngle(90_deg);//Turn left
+  pros::delay(3);
+  flywheel.move_velocity(600); //Shoot discs into high goal
+  pros::delay(3);
+  chassis->turnAngle(-90_deg);//Turn right
+  pros::delay(3);
+  chassis->moveDistance(.4_ft);//Slightly move forward
+  pros::delay(3);
+  chassis->turnAngle(-90_deg);//Turn right
+  pros::delay(3);
+  chassis->moveDistance(5_ft);//Slightly move forward
+  pros::delay(3);
+  chassis->turnAngle(-90_deg);//Turn right
+  pros::delay(3);
+  chassis->moveDistance(-.4_ft);//Slightly move backward
+  pros::delay(3);
+  chassis->moveDistance(.4_ft);//Slightly move forward
+  pros::delay(3); //MOVE FORWARD FROM TOP-lEFT FIELD ROLLER
+
 }
