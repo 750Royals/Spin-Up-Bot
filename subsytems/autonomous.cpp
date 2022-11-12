@@ -51,8 +51,23 @@ void left_auton()
 
 void skills_auton()
 {
-  /*roller.move_velocity(600); //Rotates initial field roller
-  pros::delay(100);*/
+  chassis->moveDistance(-.75_ft);//Slightly move forward
+  roller.move_velocity(600); //Rotates initial field roller
+  pros::delay(800);
+  roller.move_velocity(0);
+  pros::delay(100);
+  chassis->moveDistance(4.75_ft);//Slightly move forward
+  pros::delay(100);
+  chassis->turnAngle(-190_deg);//Turn left
+  pros::delay(100);
+  chassis->moveDistance(-4.6_ft);//Slightly move forward
+  pros::delay(101);
+  roller.move_velocity(600); //Rotates initial field roller
+  pros::delay(900);
+  roller.move_velocity(0);
+  pros::delay(100);
+  /*
+  ------------------------------------------------------------
   intake.move_velocity(-400);
   chassis->moveDistance(3.1_ft);//Slightly move forward
   pros::delay(300);
@@ -66,6 +81,10 @@ void skills_auton()
   pros::delay(50);
   flywheel.move_velocity(600); //Shoot discs into high goal
   pros::delay(300);
+-------------------------------------------------------------
+*/
+
+
   /*chassis->moveDistance(.4_ft);//Slightly move forward
   pros::delay(3);
   chassis->turnAngle(45_deg);//Turn left
