@@ -11,24 +11,7 @@ double convert(double inches)
   return (300*inches)/circumference;
 }
 
-//Indexer Code
-//Indexer retracts when X is pressed and extends when X is let go
-void indexerControl()
-{
-  if(controller.get_digital(DIGITAL_X))
-  {
-    indexer.move_relative(360, 100);
-    pros::delay(50);
-  }
-}
-void rollerControl()
-{
-  if(controller.get_digital(DIGITAL_Y))
-  {
-    roller.move_relative(1080, 100);
-    pros::delay(50);
-  }
-}
+
 int deadzone(int value, int deadzone)
 {
   if(abs(value)<deadzone)
@@ -37,6 +20,7 @@ int deadzone(int value, int deadzone)
   }
   return value;
 }
+
 
 double curveControls(int value, double min, int exponent)
 {
@@ -101,10 +85,10 @@ void setDriverControls()
     {
       intake.move_velocity(-350);
     }
-    else{
+    else
+    {
       intake.move_velocity(0);
     }
-
 
     //Flywheel Code
     if(controller.get_digital(DIGITAL_L2))
@@ -113,7 +97,7 @@ void setDriverControls()
     }
     if(move)
     {
-      flywheel.move_velocity(-600);
+      flywheel.move_velocity(-300);
     }
     else
     {
@@ -123,9 +107,18 @@ void setDriverControls()
     //Roller code
     if(controller.get_digital(DIGITAL_UP))
     {
-      roller.move_velocity(350);
+      roller.move_velocity(-350);
     }
-    else{
+    else
+    {
       roller.move_velocity(0);
+    }
+
+    //Indexer Code
+    //Indexer retracts when X is pressed and extends when X is let go
+    if(controller.get_digital(DIGITAL_X))
+    {
+      indexer.move_relative(360, 100);
+      pros::delay(50);
     }
 }
