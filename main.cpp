@@ -61,8 +61,8 @@ void competition_initialize() {}
 void autonomous()
 {
 	//right_auton();
-	//left_auton();
-	skills_auton();
+	left_auton();
+	//skills_auton();
 }
 
 /**
@@ -83,7 +83,6 @@ void opcontrol()
 	while(1)
 	{
 		setDriverControls();
-		indexerControl();
 		pros::delay(10);
 	}
 }
