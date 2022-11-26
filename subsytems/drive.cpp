@@ -1,8 +1,5 @@
 #include "main.h"
 
-bool move = false;
-bool move1 = false;
-
 
 double convert(double inches)
 {
@@ -91,15 +88,15 @@ void setDriverControls()
     }
 
     //Flywheel Code
-    if(controller.get_digital(DIGITAL_L2))
-    {
-      move = !move;
-    }
-    if(move)
+    if(controller.get_digital(DIGITAL_R1))
     {
       flywheel.move_velocity(-300);
     }
-    else
+    else if(controller.get_digital(DIGITAL_R2))
+    {
+      flywheel.move_velocity(-600);
+    }
+    else if(controller.get_digital(DIGITAL_L2))
     {
       flywheel.move_velocity(0);
     }
