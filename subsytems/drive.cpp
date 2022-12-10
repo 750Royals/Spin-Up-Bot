@@ -59,14 +59,14 @@ void setDriverControls()
     flywheel.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     intake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 
-    //Set drive to 90% power
-    frontRight.move(0.9*rightMove);
-    frontLeft.move(0.9*leftMove);
-    backRight.move(0.9*rightMove);
-    backLeft.move(0.9*leftMove);
+    //Set drive power
+    frontRight.move(rightMove);
+    frontLeft.move(leftMove);
+    backRight.move(rightMove);
+    backLeft.move(leftMove);
 
     //Piston Code
-    if(controller.get_digital(DIGITAL_A))
+    /*if(controller.get_digital(DIGITAL_A))
     {
       piston.set_value(HIGH);
       pros::delay(500);
@@ -75,12 +75,16 @@ void setDriverControls()
     else
     {
       piston.set_value(LOW);
-    }
+    }*/
 
     //Intake code
     if(controller.get_digital(DIGITAL_L1))
     {
-      intake.move_velocity(-350);
+      intake.move_velocity(-335);
+    }
+    else if(controller.get_digital(DIGITAL_L2))
+    {
+      intake.move_velocity(335);
     }
     else
     {
@@ -88,23 +92,27 @@ void setDriverControls()
     }
 
     //Flywheel Code
-    if(controller.get_digital(DIGITAL_R1))
+    if(controller.get_digital(DIGITAL_R2))
     {
-      flywheel.move_velocity(-300);
+      flywheel.move_voltage(-7000);
     }
-    else if(controller.get_digital(DIGITAL_R2))
+    else if(controller.get_digital(DIGITAL_Y))
     {
-      flywheel.move_velocity(-600);
+      flywheel.move_voltage(-12000);
     }
-    else if(controller.get_digital(DIGITAL_L2))
+    else if(controller.get_digital(DIGITAL_X))
     {
-      flywheel.move_velocity(0);
+      flywheel.move_voltage(0);
     }
 
     //Roller code
     if(controller.get_digital(DIGITAL_UP))
     {
       roller.move_velocity(-350);
+    }
+    else if(controller.get_digital(DIGITAL_DOWN))
+    {
+      roller.move_velocity(350);
     }
     else
     {
@@ -113,9 +121,16 @@ void setDriverControls()
 
     //Indexer Code
     //Indexer retracts when X is pressed and extends when X is let go
-    if(controller.get_digital(DIGITAL_X))
+    if(controller.get_digital(DIGITAL_R1))
     {
-      indexer.move_relative(360, 100);
+      indexer.move_relative(45, 100);
+      pros::delay(50);
+    }
+
+    //Piston Code
+    if(controller.get_digital(DIGITAL_A))
+    {
+      piston.set_value(LOW);
       pros::delay(50);
     }
 }
