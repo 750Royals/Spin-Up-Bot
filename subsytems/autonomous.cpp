@@ -5,9 +5,10 @@ okapi::MotorGroup rightSet({13,11});
 std::shared_ptr<ChassisController> chassis =
 ChassisControllerBuilder()
 .withMotors(leftSet, rightSet)
-.withDimensions(AbstractMotor::gearset::blue, {{4_in, 11.5_in}, okapi::imev5BlueTPR})
+.withDimensions(AbstractMotor::gearset::blue, {{4_in, 9.5_in}, okapi::imev5BlueTPR})
 .withMaxVelocity(300)
 .build();
+
 
 void right_auton()
 {
@@ -27,45 +28,41 @@ void right_auton()
 
 void left_auton()
 {
-  chassis->moveDistance(0.5_ft);//Spin roller and move forward
-  pros::delay(3);
-  chassis->turnAngle(-15_deg);//Turn slightly right
-  pros::delay(3);
-  chassis->moveDistance(2.4_ft);//Move forward and collect discs on autonomous line
-  pros::delay(3);
-  chassis->turnAngle(-90_deg);//Turn right
-  pros::delay(3);
-  chassis->moveDistance(0.8_ft);//Slightly move forward
-  pros::delay(3);
-  chassis->turnAngle(90_deg);//Turn left
-  pros::delay(3);
-  chassis->moveDistance(1.0_ft);//Slightly move forward
-  pros::delay(3);
-  chassis->turnAngle(90_deg);//Turn left
-  pros::delay(3);
-  chassis->moveDistance(0.8_ft);//Slightly move forward
-  pros::delay(3);
-  flywheel.move_velocity(600); //Shoot discs into high goal
-  pros::delay(3);
+  chassis->moveDistance(-0.1_ft);
+  pros::delay(20);
+  roller.move_velocity(200);
+  pros::delay(20);
+  chassis->moveDistance(1_ft);
 }
 
 void skills_auton()
 {
-  chassis->moveDistance(-.75_ft);//Slightly move forward
-  roller.move_velocity(600); //Rotates initial field roller
+  /*
+  chassis->moveDistance(-.80_ft);//Slightly move forward
+  roller.move_velocity(-600); //Rotates initial field roller
   pros::delay(800);
   roller.move_velocity(0);
   pros::delay(100);
-  chassis->moveDistance(4.75_ft);//Slightly move forward
+  chassis->turnAngle(-10_deg);
+  flywheel.move_velocity(-300);
+  pros::delay(2000);
+  indexer.move_relative(52, 100);
+  pros::delay(1000);
+  indexer.move_relative(52, 100);
+  pros::delay(1000);
+  /*
+
+
+  /*chassis->moveDistance(4.75_ft);//Slightly move forward
   pros::delay(100);
-  chassis->turnAngle(-190_deg);//Turn left
+  chassis->turnAngle(-180_deg);//Turn left
   pros::delay(100);
   chassis->moveDistance(-4.6_ft);//Slightly move forward
   pros::delay(101);
   roller.move_velocity(600); //Rotates initial field roller
   pros::delay(900);
   roller.move_velocity(0);
-  pros::delay(100);
+  pros::delay(100);*/
   /*
   ------------------------------------------------------------
   intake.move_velocity(-400);
