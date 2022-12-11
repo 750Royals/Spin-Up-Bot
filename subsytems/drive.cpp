@@ -105,6 +105,7 @@ void setDriverControls()
       flywheel.move_voltage(0);
     }
 
+
     //Roller code
     if(controller.get_digital(DIGITAL_UP))
     {
@@ -120,7 +121,6 @@ void setDriverControls()
     }
 
     //Indexer Code
-    //Indexer retracts when X is pressed and extends when X is let go
     if(controller.get_digital(DIGITAL_R1))
     {
       indexer.move_relative(45, 100);
@@ -128,9 +128,9 @@ void setDriverControls()
     }
 
     //Piston Code
-    if(controller.get_digital(DIGITAL_A))
+    if(controller.get_digital(DIGITAL_B))
     {
-      piston.set_value(LOW);
+      piston.set_value(HIGH);
       pros::delay(50);
     }
 }
