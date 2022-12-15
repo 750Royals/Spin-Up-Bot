@@ -19,24 +19,6 @@ int deadzone(int value, int deadzone)
 }
 
 
-double curveControls(int value, double min, int exponent)
-{
-  if(value>0)
-  {
-    return ((1-(min/127))*pow((value/127.0),exponent)+(min/127.0))*127.0;
-  }
-  else if(exponent%2==0 && value<0)
-  {
-    return (((min/127.0)-1)*pow((value/127.0),exponent)-(min/127.0))*127.0;
-  }
-  else if(value<0)
-  {
-    return ((1-(min/127.0))*pow((value/127.0),exponent)-(min/127.0))*127.0;
-  }
-  return 0;
-}
-
-
 
 void setDriverControls()
 {
@@ -45,13 +27,13 @@ void setDriverControls()
     double rightY = deadzone(controller.get_analog(ANALOG_RIGHT_Y),10);
     double rightX = deadzone(controller.get_analog(ANALOG_RIGHT_X),10);
 
-    double power = curveControls(leftY, 10, 3);
-    double turn = curveControls(rightX, 10, 3);
+    int power = leftY;
+    int turn = rightX;
     int leftMove = power + turn;
     int rightMove = power - turn;
 
 
-    frontLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    frontLeft.set_bake_mode(pros::E_MOTOR_BRAKE_HOLD);
     backLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     frontRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     backRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
@@ -80,7 +62,7 @@ void setDriverControls()
     //Intake code
     if(controller.get_digital(DIGITAL_L1))
     {
-      intake.move_velocity(-335);
+      intake.move_velocity(-250);
     }
     else if(controller.get_digital(DIGITAL_L2))
     {
@@ -94,11 +76,11 @@ void setDriverControls()
     //Flywheel Code
     if(controller.get_digital(DIGITAL_R2))
     {
-      flywheel.move_voltage(-7000);
+      flywheel.move_velocity(-350);
     }
     else if(controller.get_digital(DIGITAL_Y))
     {
-      flywheel.move_voltage(-12000);
+      flywheel.move_velocity(-400);
     }
     else if(controller.get_digital(DIGITAL_X))
     {
@@ -123,7 +105,7 @@ void setDriverControls()
     //Indexer Code
     if(controller.get_digital(DIGITAL_R1))
     {
-      indexer.move_relative(45, 100);
+      indexer.move_relative(170, 100);
       pros::delay(50);
     }
 
