@@ -19,37 +19,28 @@ void right_auton()
   frontRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   backRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
-  chassis->moveDistance(1.5_ft);
-  chassis->turnAngle(-90_deg);
   chassis->moveDistance(-1.5_ft);
   chassis->turnAngle(90_deg);
-  chassis->moveDistance(-1.6_ft);
+  chassis->moveDistance(-0.5_ft);
   roller.move_velocity(-600);
-  pros::delay(800);
+  pros::delay(500);
   roller.move_velocity(0);
-  chassis->turnAngle(-90_deg);
-  flywheel.move_velocity(-400);
-  pros::delay(4000);
-  indexer.move_relative(45, 100);
-  pros::delay(1000);
-  indexer.move_relative(45, 100);
-  pros::delay(1000);
+  pros::delay(100);
 }
 
 void left_auton()
 {
-  indexer.move_relative(170, 80);
-  pros::delay(50);
-  indexer.move_absolute(170, 80);
-  /*indexer.move_relative(170, 80);
-  indexer.move_relative(170, 80);
 
   frontLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   backLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   frontRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
   backRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
-  flywheel.move_velocity(-399);
+  pros::delay(50);
+  indexer.move_relative(170, 80);
+  pros::delay(3000);
+
+  //flywheel.move_velocity(-399);
   chassis->moveDistance(-0.2_ft);
   roller.move_velocity(-600);
   pros::delay(200);
@@ -64,10 +55,11 @@ void left_auton()
   chassis->turnAngle(-108_deg);
   pros::delay(50);
   chassis->moveDistance(0.6_ft);
+
   pros::delay(50);
   indexer.move_relative(170, 80);
   pros::delay(3000);
-*/
+
 }
 
 void left_auton_backup()
