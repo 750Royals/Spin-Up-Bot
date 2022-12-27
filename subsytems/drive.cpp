@@ -28,7 +28,7 @@ void setDriverControls()
     backLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     frontRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     backRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    backleftUp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    backLeftUp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     backRightUp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
     flywheel.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
