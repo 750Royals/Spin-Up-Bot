@@ -1,14 +1,5 @@
 #include "main.h"
 
-
-double convert(double inches)
-{
-  double diameter = 4.00;
-  double circumference = diameter*M_PI;
-  return (300*inches)/circumference;
-}
-
-
 int deadzone(int value, int deadzone)
 {
   if(abs(value)<deadzone)
@@ -22,10 +13,10 @@ int deadzone(int value, int deadzone)
 
 void setDriverControls()
 {
-    double leftY = deadzone(controller.get_analog(ANALOG_LEFT_Y),10);
-    double leftX = deadzone(controller.get_analog(ANALOG_LEFT_X),10);
-    double rightY = deadzone(controller.get_analog(ANALOG_RIGHT_Y),10);
-    double rightX = deadzone(controller.get_analog(ANALOG_RIGHT_X),10);
+    int leftY = deadzone(controller.get_analog(ANALOG_LEFT_Y),10);
+    int leftX = deadzone(controller.get_analog(ANALOG_LEFT_X),10);
+    int rightY = deadzone(controller.get_analog(ANALOG_RIGHT_Y),10);
+    int rightX = deadzone(controller.get_analog(ANALOG_RIGHT_X),10);
 
     int power = leftY;
     int turn = rightX;
@@ -33,10 +24,12 @@ void setDriverControls()
     int rightMove = power - turn;
 
 
-    frontLeft.set_bake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    frontLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     backLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     frontRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     backRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    backleftUp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    backRightUp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
     flywheel.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     intake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
@@ -46,23 +39,13 @@ void setDriverControls()
     frontLeft.move(leftMove);
     backRight.move(rightMove);
     backLeft.move(leftMove);
-
-    //Piston Code
-    /*if(controller.get_digital(DIGITAL_A))
-    {
-      piston.set_value(HIGH);
-      pros::delay(500);
-      piston.set_value(LOW);
-    }
-    else
-    {
-      piston.set_value(LOW);
-    }*/
+    backRightUp.move(rightMove);
+    backLeftUp.move(leftMove);
 
     //Intake code
     if(controller.get_digital(DIGITAL_L1))
     {
-      intake.move_velocity(-250);
+      intake.move_velocity(-335);
     }
     else if(controller.get_digital(DIGITAL_L2))
     {
@@ -76,7 +59,7 @@ void setDriverControls()
     //Flywheel Code
     if(controller.get_digital(DIGITAL_R2))
     {
-      flywheel.move_velocity(-350);
+      flywheel.move_velocity(-300);
     }
     else if(controller.get_digital(DIGITAL_Y))
     {
@@ -84,7 +67,7 @@ void setDriverControls()
     }
     else if(controller.get_digital(DIGITAL_X))
     {
-      flywheel.move_voltage(0);
+      flywheel.move_velocity(0);
     }
 
 
