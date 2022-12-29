@@ -1,20 +1,14 @@
 #include "main.h"
 
-class PID
-{
- public:
-   double kP;
-   double kI;
-   double kD;
-   double target;
-   double current;
-   double error;
-   double prevError;
-   double derivative;
-   double integral;
-   void moveDistance(double distance);
-};
-
-extern PID drive;
-
-void setDriveGains(double kP, double kI, double kD);
+extern double kP;
+extern double kI;
+extern double kD;
+extern int target;
+extern int current;
+extern int error;
+extern int prevError;
+extern int derivative;
+extern int integral;
+extern void moveDistance(double distance);
+extern void setDriveVoltage(int leftVoltage, int rightVoltage);
+extern int convert(double inches);
