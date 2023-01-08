@@ -11,4 +11,4 @@ pros::Motor backLeftUp(8, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER
 pros::Motor intake(7, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_COUNTS);
 pros::Motor flywheel(10, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_COUNTS);
 pros::ADIDigitalOut piston ('G', false);
-//pros::Vision visionSensor(10);
+pros::Vision visionSensor(12);
