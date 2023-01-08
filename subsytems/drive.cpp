@@ -23,16 +23,9 @@ void setDriverControls()
     int leftMove = power + turn;
     int rightMove = power - turn;
 
-
-    frontLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    backLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    frontRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    backRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    backLeftUp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    backRightUp.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-
     flywheel.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     intake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+
 
     //Set drive power
     frontRight.move(rightMove);
@@ -42,14 +35,14 @@ void setDriverControls()
     backRightUp.move(rightMove);
     backLeftUp.move(leftMove);
 
-    //Intake code
+    //Intake and Roller code
     if(controller.get_digital(DIGITAL_L1))
     {
-      intake.move_velocity(-335);
+      intake.move_voltage(12000);
     }
-    else if(controller.get_digital(DIGITAL_L2))
+    else if(controller.get_digital(DIGITAL_R1))
     {
-      intake.move_velocity(335);
+      intake.move_voltage(-12000);
     }
     else
     {
@@ -71,31 +64,5 @@ void setDriverControls()
     }
 
 
-    //Roller code
-    if(controller.get_digital(DIGITAL_UP))
-    {
-      roller.move_velocity(-350);
-    }
-    else if(controller.get_digital(DIGITAL_DOWN))
-    {
-      roller.move_velocity(350);
-    }
-    else
-    {
-      roller.move_velocity(0);
-    }
 
-    //Indexer Code
-    if(controller.get_digital(DIGITAL_R1))
-    {
-      indexer.move_relative(170, 100);
-      pros::delay(50);
-    }
-
-    //Piston Code
-    if(controller.get_digital(DIGITAL_B))
-    {
-      piston.set_value(HIGH);
-      pros::delay(50);
-    }
 }
