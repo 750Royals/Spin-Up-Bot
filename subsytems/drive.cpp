@@ -1,4 +1,8 @@
 #include "main.h"
+#include "subsystemHeaders/autonomous.h"
+#include "subsystemHeaders/driver.h"
+#include "subsystemHeaders/globals.h"
+#include "subsystemHeaders/autonmethods.h"
 
 int deadzone(int value, int deadzone)
 {
@@ -52,15 +56,15 @@ void setDriverControls()
     //Flywheel Code
     if(controller.get_digital(DIGITAL_R2))
     {
-      flywheel.move_velocity(-300);
+      flywheel.move_voltage(8000);
     }
     else if(controller.get_digital(DIGITAL_Y))
     {
-      flywheel.move_velocity(-400);
+      flywheel.move_voltage(12000);
     }
     else if(controller.get_digital(DIGITAL_X))
     {
-      flywheel.move_velocity(0);
+      flywheel.move_voltage(0);
     }
 
 
