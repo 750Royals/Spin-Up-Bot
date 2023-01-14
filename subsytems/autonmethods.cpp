@@ -4,15 +4,16 @@
 #include "subsystemHeaders/globals.h"
 #include "subsystemHeaders/autonmethods.h"
 
-double kP = 10.85;
-double kI = 0.0085;
-double kD = 0.9;
+double kP = 8.25;
+double kI = 0.0089;
+double kD = 0.7;
 
 double tkP = 10.4;
 double tkI = 0.017;
-double tkD = 0.81;
+double tkD = 0.71;
 
 int integralBound = 2674;
+int turnIntegralBound = 767;
 
 void setDriveVoltage(int leftVoltage, int rightVoltage)
 {
@@ -34,7 +35,7 @@ int convert(double inches)
 
 int convertAngle(double angle)
 {
-  return (int)(angle*2300/180);
+  return (int)(angle*2250/180);
 }
 
 void resetDriveEncoders()
@@ -61,6 +62,14 @@ void moveDistance(double value)
   int x = 0;
   while(abs(error)>50)
   {
+    if(error < integralBound)
+    {
+      kI = 0.0085;
+    }
+    else if(error > integralBound)
+    {
+      kI = 0;
+    }
     int leftMotorValues = (backLeft.get_position() + frontLeft.get_position() + backLeftUp.get_position())/3;
     int rightMotorValues = (backRight.get_position() + frontRight.get_position() + backRightUp.get_position())/3;
     current = (leftMotorValues + rightMotorValues)/2;
@@ -73,7 +82,7 @@ void moveDistance(double value)
     prevError = error;
     pros::delay(20);
     time += 20;
-    if(value < 20 && time > 1000)
+    if(time > 1500)
     {
       break;
     }
@@ -86,6 +95,7 @@ void moveDistance(double value)
 
 void turn(double value)
 {
+  int time = 0;
   int target = convertAngle(value);
   int error = convertAngle(value);
   int integral = 0;
@@ -94,11 +104,11 @@ void turn(double value)
   int prevError = 0;
   while(abs(error)>100)
   {
-    if(error < integralBound)
+    if(error < turnIntegralBound)
     {
-      kI = 0.0085;
+      kI = 0.017;
     }
-    else if(error > integralBound)
+    else if(error > turnIntegralBound)
     {
       kI = 0;
     }
@@ -113,6 +123,11 @@ void turn(double value)
     setDriveVoltage(leftVoltage, rightVoltage);
     prevError = error;
     pros::delay(20);
+    time += 20;
+    if(time > 1500)
+    {
+      break;
+    }
   }
   setDriveVoltage(0,0);
   resetDriveEncoders();
