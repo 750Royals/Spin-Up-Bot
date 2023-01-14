@@ -14,6 +14,23 @@ int deadzone(int value, int deadzone)
 }
 
 
+int curveControls(int value, double min, int exponent)
+{
+  if(value>0)
+  {
+    return ((1-(min/127))*pow((value/127.0),exponent)+(min/127.0))*127.0;
+  }
+  else if(exponent%2==0 && value<0)
+  {
+    return (((min/127.0)-1)*pow((value/127.0),exponent)-(min/127.0))*127.0;
+  }
+  else if(value<0)
+  {
+    return ((1-(min/127.0))*pow((value/127.0),exponent)-(min/127.0))*127.0;
+  }
+  return 0;
+}
+
 
 void setDriverControls()
 {
@@ -22,8 +39,8 @@ void setDriverControls()
     int rightY = deadzone(controller.get_analog(ANALOG_RIGHT_Y),10);
     int rightX = deadzone(controller.get_analog(ANALOG_RIGHT_X),10);
 
-    int power = leftY;
-    int turn = rightX;
+    int power = curveControls(leftY, 10, 2);
+    int turn = curveControls(rightX, 10, 2);
     int leftMove = power + turn;
     int rightMove = power - turn;
 
@@ -56,7 +73,7 @@ void setDriverControls()
     //Flywheel Code
     if(controller.get_digital(DIGITAL_R2))
     {
-      flywheel.move_voltage(8000);
+      flywheel.move_voltage(10000);
     }
     else if(controller.get_digital(DIGITAL_Y))
     {
@@ -66,7 +83,5 @@ void setDriverControls()
     {
       flywheel.move_voltage(0);
     }
-
-
 
 }
