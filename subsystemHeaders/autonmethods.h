@@ -16,3 +16,4 @@ void moveIntake(int direction, double seconds);
 void moveRoller(int direction, double seconds);
 void moveFlywheel(int speed);
 extern int integralBound;
+extern int turnIntegralBound;
