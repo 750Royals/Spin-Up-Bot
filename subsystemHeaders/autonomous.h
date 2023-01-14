@@ -1,4 +1,5 @@
 #include "main.h"
 
-
-void left_auton_pid();
+void skills();
+void left_auton();
+void right_auton();
