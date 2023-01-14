@@ -1,4 +1,8 @@
 #include "main.h"
+#include "subsystemHeaders/autonomous.h"
+#include "subsystemHeaders/driver.h"
+#include "subsystemHeaders/globals.h"
+#include "subsystemHeaders/autonmethods.h"
 
 /**
  * A callback function for LLEMU's center button.
@@ -24,9 +28,11 @@ void on_center_button() {
  */
 void initialize() {
 	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Maheehee");
+	pros::lcd::set_text(1, "Hello PROS User!");
 
 	pros::lcd::register_btn1_cb(on_center_button);
+
+	pros::screen::set_pen(COLOR_RED);
 }
 
 /**
@@ -58,9 +64,21 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous()
+void autonomous() 
 {
-	left_auton_pid();
+	int auton_number = 1;
+	if(auton_number == 1)
+	{
+		left_auton();
+	}
+	else if(auton_number == 2)
+	{
+		right_auton();
+	}
+	else if(auton_number == 3)
+	{
+		skills();
+	}
 }
 
 /**
@@ -76,7 +94,7 @@ void autonomous()
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void opcontrol()
+void opcontrol() 
 {
 	while(1)
 	{
