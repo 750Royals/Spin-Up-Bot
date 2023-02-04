@@ -1,10 +1,11 @@
 #include "main.h"
+#include "pros/rtos.hpp"
 #include "subsystemHeaders/autonomous.h"
 #include "subsystemHeaders/driver.h"
 #include "subsystemHeaders/globals.h"
 #include "subsystemHeaders/autonmethods.h"
 
-double kP = 8.25;
+double kP = 10.25;
 double kI = 0.0089;
 double kD = 0.7;
 
@@ -19,10 +20,8 @@ void setDriveVoltage(int leftVoltage, int rightVoltage)
 {
   backRight.move_voltage(rightVoltage);
   frontRight.move_voltage(rightVoltage);
-  backRightUp.move_voltage(rightVoltage);
   backLeft.move_voltage(leftVoltage);
   frontLeft.move_voltage(leftVoltage);
-  backLeftUp.move_voltage(leftVoltage);
 }
 
 int convert(double inches)
@@ -44,8 +43,6 @@ void resetDriveEncoders()
   frontRight.tare_position();
   backLeft.tare_position();
   frontLeft.tare_position();
-  backLeftUp.tare_position();
-  backRightUp.tare_position();
   pros::delay(20);
 }
 
@@ -60,7 +57,7 @@ void moveDistance(double value)
   int current = 0;
   int prevError = 0;
   int x = 0;
-  while(abs(error)>50)
+  while(abs(error)>5)
   {
     if(error < integralBound)
     {
@@ -70,8 +67,8 @@ void moveDistance(double value)
     {
       kI = 0;
     }
-    int leftMotorValues = (backLeft.get_position() + frontLeft.get_position() + backLeftUp.get_position())/3;
-    int rightMotorValues = (backRight.get_position() + frontRight.get_position() + backRightUp.get_position())/3;
+    int leftMotorValues = (backLeft.get_position() + frontLeft.get_position())/2;
+    int rightMotorValues = (backRight.get_position() + frontRight.get_position())/2;
     current = (leftMotorValues + rightMotorValues)/2;
     error = target - current;
     derivative = error - prevError;
@@ -82,7 +79,19 @@ void moveDistance(double value)
     prevError = error;
     pros::delay(20);
     time += 20;
-    if(time > 1500)
+    if(fabs(value) <= 10 && time > 500)
+    {
+      break;
+    }
+    if(fabs(value) <= 30 && fabs(value) > 10 && time > 1500)
+    {
+      break;
+    }
+    if(fabs(value) <= 50 && fabs(value) > 30 && time > 2000)
+    {
+      break;
+    }
+    if(time > 2500)
     {
       break;
     }
@@ -112,8 +121,8 @@ void turn(double value)
     {
       kI = 0;
     }
-    int leftMotorValues = (backLeft.get_position() + frontLeft.get_position() + backLeftUp.get_position())/3;
-    int rightMotorValues = (backRight.get_position() + frontRight.get_position() + backRightUp.get_position())/3;
+    int leftMotorValues = (backLeft.get_position() + frontLeft.get_position())/2;
+    int rightMotorValues = (backRight.get_position() + frontRight.get_position())/2;
     current = leftMotorValues - rightMotorValues;
     error = target - current;
     derivative = error - prevError;
@@ -124,7 +133,7 @@ void turn(double value)
     prevError = error;
     pros::delay(20);
     time += 20;
-    if(time > 1500)
+    if(time > 1000)
     {
       break;
     }
@@ -134,21 +143,30 @@ void turn(double value)
 }
 
 
-void moveIntake(int direction, double seconds)
+void intakeOn(int direction)
 {
   intake.move_voltage(direction*12000);
-  pros::delay(seconds*1000);
+  pros::delay(20);
+}
+
+void intakeOff()
+{
   intake.move_voltage(0);
 }
 
 void moveRoller(int direction, double seconds)
 {
-  intake.move_voltage(direction*12000);
+  roller.move_voltage(direction*12000);
   pros::delay(seconds*1000);
-  intake.move_voltage(0);
+  roller.move_voltage(0);
 }
 
-void moveFlywheel(int speed)
+void flywheelOn(int voltage)
 {
-  flywheel.move_velocity(speed);
+  flywheel.move_voltage(voltage);
+}
+
+void flywheelOff()
+{
+  flywheel.move_voltage(0);
 }
