@@ -33,6 +33,7 @@ void initialize() {
 	pros::lcd::register_btn1_cb(on_center_button);
 
 	pros::screen::set_pen(COLOR_RED);
+	piston.set_value(false);
 }
 
 /**
@@ -51,7 +52,10 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize() 
+{
+	piston.set_value(false);
+}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -66,7 +70,8 @@ void competition_initialize() {}
  */
 void autonomous() 
 {
-	int auton_number = 1;
+	int auton_number = 3;
+	;
 	if(auton_number == 1)
 	{
 		left_auton();
@@ -96,6 +101,7 @@ void autonomous()
  */
 void opcontrol() 
 {
+	piston.set_value(false);
 	while(1)
 	{
 		setDriverControls();
