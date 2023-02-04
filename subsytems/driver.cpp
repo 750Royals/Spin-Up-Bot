@@ -1,8 +1,10 @@
 #include "main.h"
+#include "pros/motors.h"
 #include "subsystemHeaders/autonomous.h"
 #include "subsystemHeaders/driver.h"
 #include "subsystemHeaders/globals.h"
 #include "subsystemHeaders/autonmethods.h"
+
 
 int deadzone(int value, int deadzone)
 {
@@ -12,7 +14,6 @@ int deadzone(int value, int deadzone)
   }
   return value;
 }
-
 
 int curveControls(int value, double min, int exponent)
 {
@@ -31,7 +32,6 @@ int curveControls(int value, double min, int exponent)
   return 0;
 }
 
-
 void setDriverControls()
 {
     int leftY = deadzone(controller.get_analog(ANALOG_LEFT_Y),10);
@@ -45,7 +45,6 @@ void setDriverControls()
     int rightMove = power - turn;
 
     flywheel.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-    intake.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 
 
     //Set drive power
@@ -53,15 +52,13 @@ void setDriverControls()
     frontLeft.move(leftMove);
     backRight.move(rightMove);
     backLeft.move(leftMove);
-    backRightUp.move(rightMove);
-    backLeftUp.move(leftMove);
 
-    //Intake and Roller code
+    //Intake code
     if(controller.get_digital(DIGITAL_L1))
     {
       intake.move_voltage(12000);
     }
-    else if(controller.get_digital(DIGITAL_R1))
+    else if(controller.get_digital(DIGITAL_L2))
     {
       intake.move_voltage(-12000);
     }
@@ -73,7 +70,7 @@ void setDriverControls()
     //Flywheel Code
     if(controller.get_digital(DIGITAL_R2))
     {
-      flywheel.move_voltage(10000);
+      flywheel.move_voltage(8800);
     }
     else if(controller.get_digital(DIGITAL_Y))
     {
@@ -82,6 +79,32 @@ void setDriverControls()
     else if(controller.get_digital(DIGITAL_X))
     {
       flywheel.move_voltage(0);
+    }
+
+    //Indexer code
+    if(controller.get_digital(DIGITAL_R1))
+    {
+      indexer.move_relative(600, 600);
+    }
+
+    //Roller Code
+    if(controller.get_digital(DIGITAL_UP))
+    {
+      roller.move_voltage(12000);
+    }
+    else if(controller.get_digital(DIGITAL_DOWN))
+    {
+      roller.move_voltage(-12000);
+    }
+    else 
+    {
+      roller.move_voltage(0);
+    }
+
+    //Pneumatics Code
+    if(controller.get_digital(DIGITAL_B))
+    {
+      piston.set_value(true);
     }
 
 }
