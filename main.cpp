@@ -1,9 +1,21 @@
+#include "lemlib/api.hpp"
 #include "main.h"
-#include "subsystemHeaders/autonomous.h"
-#include "subsystemHeaders/driver.h"
 #include "subsystemHeaders/globals.h"
-#include "subsystemHeaders/autonmethods.h"
+#include "subsystemHeaders/driver.h"
+#include "subsystemHeaders/autonomous.h"
 
+
+void screen() {
+    // loop forever
+    while (true) {
+        lemlib::Pose pose = chassis.getPose(); // get the current position of the robot
+        pros::lcd::print(0, "x: %f", pose.x); // print the x position
+        pros::lcd::print(1, "y: %f", pose.y); // print the y position
+        pros::lcd::print(2, "heading: %f", pose.theta); // print the heading
+        pros::delay(10);
+    }
+}
+ 
 /**
  * A callback function for LLEMU's center button.
  *
@@ -31,9 +43,8 @@ void initialize() {
 	pros::lcd::set_text(1, "Hello PROS User!");
 
 	pros::lcd::register_btn1_cb(on_center_button);
-
-	pros::screen::set_pen(COLOR_RED);
-	piston.set_value(false);
+	chassis.calibrate();
+	pros::Task screenTask(screen); // create a task to print the position to the screen
 }
 
 /**
@@ -52,10 +63,7 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() 
-{
-	piston.set_value(false);
-}
+void competition_initialize() {}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -70,8 +78,7 @@ void competition_initialize()
  */
 void autonomous() 
 {
-	int auton_number = 3;
-	;
+	int auton_number = 1;
 	if(auton_number == 1)
 	{
 		left_auton();
@@ -83,6 +90,10 @@ void autonomous()
 	else if(auton_number == 3)
 	{
 		skills();
+	}
+	else if(auton_number == 4)
+	{
+		test();
 	}
 }
 
@@ -99,6 +110,8 @@ void autonomous()
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
+
+
 void opcontrol() 
 {
 	piston.set_value(false);
