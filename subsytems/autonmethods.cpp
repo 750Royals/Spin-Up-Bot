@@ -5,16 +5,16 @@
 #include "subsystemHeaders/globals.h"
 #include "subsystemHeaders/autonmethods.h"
 
-double kP = 10.25;
-double kI = 0.0089;
-double kD = 0.7;
+double kP = 7.25;
+double kI = 0.0012;
+double kD = 1.02;
 
-double tkP = 10.4;
-double tkI = 0.017;
-double tkD = 0.71;
+double tkP = 7.06;
+double tkI = 0.0012;
+double tkD = 1.02;
 
-int integralBound = 2674;
-int turnIntegralBound = 767;
+int integralBound = 0;
+int turnIntegralBound = 90;
 
 void setDriveVoltage(int leftVoltage, int rightVoltage)
 {
@@ -34,7 +34,7 @@ int convert(double inches)
 
 int convertAngle(double angle)
 {
-  return (int)(angle*2250/180);
+  return (int)(angle*2500/180);
 }
 
 void resetDriveEncoders()
@@ -47,23 +47,18 @@ void resetDriveEncoders()
 }
 
 
-void moveDistance(double value)
+void moveDistance(double value, int time)
 {
-  int time = 0;
+  int x = 0;
   int target = convert(value);
   int error = convert(value);
   int integral = 0;
   int derivative = 0;
   int current = 0;
   int prevError = 0;
-  int x = 0;
   while(abs(error)>5)
   {
-    if(error < integralBound)
-    {
-      kI = 0.0085;
-    }
-    else if(error > integralBound)
+    if(error > integralBound)
     {
       kI = 0;
     }
@@ -78,20 +73,8 @@ void moveDistance(double value)
     setDriveVoltage(leftVoltage, rightVoltage);
     prevError = error;
     pros::delay(20);
-    time += 20;
-    if(fabs(value) <= 10 && time > 500)
-    {
-      break;
-    }
-    if(fabs(value) <= 30 && fabs(value) > 10 && time > 1500)
-    {
-      break;
-    }
-    if(fabs(value) <= 50 && fabs(value) > 30 && time > 2000)
-    {
-      break;
-    }
-    if(time > 2500)
+    x += 20;
+    if(x > time)
     {
       break;
     }
@@ -102,9 +85,9 @@ void moveDistance(double value)
 }
 
 
-void turn(double value)
+void turn(double value, int time)
 {
-  int time = 0;
+  int x = 0;
   int target = convertAngle(value);
   int error = convertAngle(value);
   int integral = 0;
@@ -115,11 +98,11 @@ void turn(double value)
   {
     if(error < turnIntegralBound)
     {
-      kI = 0.017;
+      tkI = 0.017;
     }
     else if(error > turnIntegralBound)
     {
-      kI = 0;
+      tkI = 0;
     }
     int leftMotorValues = (backLeft.get_position() + frontLeft.get_position())/2;
     int rightMotorValues = (backRight.get_position() + frontRight.get_position())/2;
@@ -132,8 +115,8 @@ void turn(double value)
     setDriveVoltage(leftVoltage, rightVoltage);
     prevError = error;
     pros::delay(20);
-    time += 20;
-    if(time > 1000)
+    x += 20;
+    if(x > time)
     {
       break;
     }
@@ -142,6 +125,39 @@ void turn(double value)
   resetDriveEncoders();
 }
 
+void turnInertial(double angle)
+{
+  int time = 0;
+  double target = angle;
+  double error = angle;
+  double integral = 0;
+  double derivative = 0;
+  double current = inertial.get_heading();
+  double prevError = 0;
+  while(fabs(error)>1)
+  {
+    if(error < turnIntegralBound)
+    {
+      tkI = 0.000;
+    }
+    else if(error > turnIntegralBound)
+    {
+      tkI = 0;
+    }
+    current = inertial.get_heading();
+    error = target - current;
+    derivative = error - prevError;
+    integral += error;
+    int leftVoltage = (int) ((tkP*error+tkI*integral+tkD*derivative));
+    int rightVoltage = (int) (-(tkP*error+tkI*integral+tkD*derivative));
+    setDriveVoltage(leftVoltage, rightVoltage);
+    prevError = error;
+    pros::delay(20);
+    time += 20;
+  } 
+  setDriveVoltage(0,0);
+  resetDriveEncoders();
+}
 
 void intakeOn(int direction)
 {
