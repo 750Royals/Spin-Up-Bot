@@ -119,9 +119,40 @@ void left_auton()
   pros::delay(1500);
   indexer.move_relative(300, 600);
 }
-
 void right_auton()
 {
+  moveDistance(24);
+  turn(90);
+  moveDistance(-3);
+  moveRoller(1, 0.05);
+  moveDistance(3);
+  turn(-45);
+  moveDistance(2);
+  turn(20);
+  indexer.move_relative(600, 600);
+  indexer.move_relative(600, 600);
+  turn(-20);
+  moveDistance(20);
+  intakeOn(1);
+  moveDistance(20);
+  turn(90);
+  indexer.move_relative(600, 600);
+  indexer.move_relative(600, 600);
+  indexer.move_relative(600, 600);
+  pros::delay(1000);
+  intakeOn(0);
+  turn(180);
+  moveDistance(10);
+  intakeOn(1);
+  turn(45);
+  moveDistance(24);
+  intakeOn(0);
+  pros::delay(1000);
+  turn(90);
+  moveDistance(35);
+  indexer.move_relative(600, 600);
+  indexer.move_relative(600, 600);
+  indexer.move_relative(600, 600);
 }
 
 void test()
