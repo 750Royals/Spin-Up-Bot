@@ -1,3 +1,4 @@
+// Nessesary Import Statements
 #include "main.h"
 #include "pros/motors.h"
 #include "subsystemHeaders/autonomous.h"
@@ -7,18 +8,21 @@
 #include <ostream>
 #include <string>
 
+// Methods
 void setTurnVoltage(int voltage) {
   backRight.move_voltage(-voltage);
   frontRight.move_voltage(-voltage);
   backLeft.move_voltage(voltage);
   frontLeft.move_voltage(voltage);
 }
+// Deadzone prevents unintentional bot movements from the joystick
 int deadzone(int value, int deadzone) {
   if (abs(value) < deadzone) {
     return 0;
   }
   return value;
 }
+// Curve controls maps a joystick input to a motor voltage
 int curveControls(int value, double min, int exponent) {
   if (value > 0) {
     return ((1 - (min / 127)) * pow((value / 127.0), exponent) + (min / 127.0)) * 127.0;
@@ -29,6 +33,7 @@ int curveControls(int value, double min, int exponent) {
   }
   return 0;
 }
+//Function to align the robot with the vision sensor
 void align() {
   vision_object_s_t rtn = visionSensor.get_by_sig(0, 1);
   while (rtn.left_coord != 50) {
@@ -39,19 +44,23 @@ void align() {
     }
   }
 }
+// Main drive controls that control the bot
 void setDriverControls() {
-
+  
+  // Tuning sensors
   int position = (frontRight.get_position() + backRight.get_position() + frontLeft.get_position() + frontLeft.get_position()) / 4;
   std::string pos = std::to_string(position);
 
   double heading = inertial.get_heading();
   std::string hed = std::to_string(heading);
-
+  
+  // Modify the controller inputs using the deadzone moethod and store the motor voltages
   int leftY = deadzone(controller.get_analog(ANALOG_LEFT_Y), 10);
   int leftX = deadzone(controller.get_analog(ANALOG_LEFT_X), 10);
   int rightY = deadzone(controller.get_analog(ANALOG_RIGHT_Y), 10);
   int rightX = deadzone(controller.get_analog(ANALOG_RIGHT_X), 10);
-
+  
+  // Set the motor voltages
   int power = curveControls(leftY, 10, 2);
   int turn = curveControls(rightX, 10, 2);
   int leftMove = power + turn;
