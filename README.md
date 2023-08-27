@@ -41,6 +41,8 @@ This is our code for the 2022-2023 Vex Spinup game. We are using Pros with VSCod
   <img src="https://github.com/SB-750Royals/.github/blob/main/profile/img.png" alt="img.png" width="75%">
 </div>
 
+
+
 | **Member**            | **Role**                    |
 |-----------------------|-----------------------------|
 | Adithiya G Karthik    | Captain                     |
