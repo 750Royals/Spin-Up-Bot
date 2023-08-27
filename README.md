@@ -5,7 +5,7 @@ This is our code for the 2022-2023 Vex Spinup game. We are using Pros with VSCod
 </p>
 
 ## Controller Mapping
-![Controller Map](https://github.com/SB-750Royals/Over-Under-Main/blob/main/Images/img.png)
+![Controller Map](https://raw.githubusercontent.com/vigneshsaravanakumar404/imagestorage/main/img.png)
 
 | Input        | Output                                                   | Input        | Output                                 |
 |--------------|----------------------------------------------------------|--------------|----------------------------------------|
